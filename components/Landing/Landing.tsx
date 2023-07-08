@@ -7,7 +7,7 @@ interface Item {
 }
 
 function Landing() {
-  const [data, setData] = useState<Item[] | null>(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -22,7 +22,7 @@ function Landing() {
   return (
     <div className="bg-gray-100 min-h-screen py-8">
       <div className="container mx-auto">
-        <h1 className="text-3xl font-bold mb-8">My Blog</h1>
+        <h1 className="text-3xl font-bold mb-8 text-green-500">My Blog</h1>
 
         {data ? (
           <div className="grid gap-8 lg:grid-cols-2">
