@@ -7,7 +7,7 @@ interface Item {
 }
 
 function Landing() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<Item[] | null>(null);
 
   useEffect(() => {
     async function fetchData() {
