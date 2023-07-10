@@ -11,8 +11,8 @@ function Landing() {
 
   useEffect(() => {
     async function fetchData() {
-      // const res = await fetch('http://127.0.0.1:8081/api/question-answers');
-      const res = await fetch('https://my-cloudrun-service-c2jkmf2kea-uw.a.run.app/api/question-answers');
+      const res = await fetch('http://127.0.0.1:8081/api/question-answers');
+      // const res = await fetch('https://my-cloudrun-service-c2jkmf2kea-uw.a.run.app/api/question-answers');
       const json = await res.json();
       setData(json);
     }
@@ -22,7 +22,7 @@ function Landing() {
   return (
     <div className="bg-gray-100 min-h-screen py-8">
       <div className="container mx-auto">
-        <h1 className="text-3xl font-bold mb-8 text-green-500">My Blog</h1>
+        <h1 className="text-3xl font-bold mb-8 text-green-500 has text-center">Interview Questions</h1>
 
         {data ? (
           <div className="grid gap-8 lg:grid-cols-2">
