@@ -41,7 +41,25 @@ function Landing() {
       <div className="container mx-auto">
         <h1 className="text-3xl font-bold mb-8 text-green-500 has text-center">Interview Questions</h1>
 
-        <div className="mb-4">
+        <div className="pt-16">
+          {filteredData ? (
+            <div className="grid gap-8 lg:grid-cols-2">
+              {filteredData.map((item) => (
+                <div key={item.id} className="bg-white shadow rounded-lg">
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold mb-4">{item.question}</h3>
+                    <p className="text-gray-700">{item.answer}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center">Loading...</p>
+          )}
+        </div>
+
+        <div className="fixed top-0 bg-white w-full py-4 px-6 z-10">
+          <h1 className="text-3xl font-bold mb-8 text-green-500 has text-center">Interview Questions</h1>
           <input
             type="text"
             className="border border-gray-300 rounded py-2 px-4 w-full"
@@ -50,21 +68,6 @@ function Landing() {
             onChange={handleSearch}
           />
         </div>
-
-        {filteredData ? (
-          <div className="grid gap-8 lg:grid-cols-2">
-            {filteredData.map((item) => (
-              <div key={item.id} className="bg-white shadow rounded-lg">
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-4">{item.question}</h3>
-                  <p className="text-gray-700">{item.answer}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-center">Loading...</p>
-        )}
       </div>
     </div>
   );
