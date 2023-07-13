@@ -68,13 +68,13 @@ const data = [
 function SecLanding() {
   const [filteredData, setFilteredData] = useState<Item[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   useEffect(() => {
     const filteredItems = data.filter((item) =>
       item.question.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    if (selectedCategory !== 'All') {
+    if (selectedCategory) {
       const categoryFilteredItems = filteredItems.filter(
         (item) => item.category === selectedCategory
       );
@@ -89,15 +89,15 @@ function SecLanding() {
   };
 
   const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCategory(event.target.value);
+    setSelectedCategory(event.target.value === "All" ? null : event.target.value);
   };
+
   const categories = Array.from(new Set(data.map((item) => item.category)));
 
-  const transitions = useTransition(filteredData, {
-    from: { opacity: 0, transform: 'scale(0.95)' },
-    enter: { opacity: 1, transform: 'scale(1)' },
-    leave: { opacity: 0, transform: 'scale(0.95)' },
-    trail: 100,
+  const transitions = useTransition(categories, {
+    from: { opacity: 0, transform: 'translate3d(0, -10px, 0)' },
+    enter: { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+    leave: { opacity: 0, transform: 'translate3d(0, -10px, 0)' },
   });
 
   return (
@@ -115,26 +115,26 @@ function SecLanding() {
           />
           <select
             className="border border-gray-300 rounded-r py-2 px-4 bg-white"
-            value={selectedCategory}
+            value={selectedCategory || "All"}
             onChange={handleCategoryChange}
           >
             <option value="All">All Categories</option>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
+            {transitions(({ opacity, transform }, item) => (
+              <animated.option
+                key={item}
+                value={item}
+                style={{ opacity, transform }}
+              >
+                {item}
+              </animated.option>
             ))}
           </select>
         </div>
 
         {filteredData.length > 0 ? (
           <div className="grid gap-8 lg:grid-cols-2">
-            {transitions(({ opacity, transform }, item) => (
-              <animated.div
-                style={{ opacity, transform }}
-                key={item.id}
-                className="bg-white shadow rounded-lg"
-              >
+            {filteredData.map((item) => (
+              <div key={item.id} className="bg-white shadow rounded-lg">
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{item.question}</h3>
                   <p className="text-gray-700 mb-4">{item.answer}</p>
@@ -142,7 +142,7 @@ function SecLanding() {
                     <p className="text-gray-500">Category: {item.category}</p>
                   )}
                 </div>
-              </animated.div>
+              </div>
             ))}
           </div>
         ) : (
@@ -153,6 +153,7 @@ function SecLanding() {
       </div>
     </div>
   );
+
 }
 
 export default SecLanding;
