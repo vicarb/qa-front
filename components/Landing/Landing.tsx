@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react';
-
+import { useTransition, animated } from '@react-spring/web';
 interface Item {
   id: number;
   question: string;
