@@ -1,6 +1,7 @@
 'use client'
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTransition, animated } from '@react-spring/web';
+
 interface Item {
   id: number;
   question: string;
@@ -10,17 +11,21 @@ interface Item {
 
 function Landing() {
   const [data, setData] = useState<Item[] | null>(null);
-  const [filteredData, setFilteredData] = useState<Item[] | null>(null);
+  const [filteredData, setFilteredData] = useState<Item[]>([]); // Updated initial state
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch('http://127.0.0.1:8081/api/question-answers');
-      // const res = await fetch('https://my-cloudrun-service-c2jkmf2kea-uw.a.run.app/api/question-answers');
-      const json = await res.json();
-      setData(json);
-      setFilteredData(json);
+      try {
+        const res = await fetch('http://127.0.0.1:8081/api/question-answers');
+        // const res = await fetch('https://my-cloudrun-service-c2jkmf2kea-uw.a.run.app/api/question-answers');
+        const json = await res.json();
+        setData(json);
+        setFilteredData(json);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
     }
     fetchData();
   }, []);
@@ -49,9 +54,14 @@ function Landing() {
     setSelectedCategory(event.target.value);
   };
 
-  const categories = data
-    ? Array.from(new Set(data.map((item) => item.category)))
-    : [];
+  const categories = data ? Array.from(new Set(data.map((item) => item.category))) : [];
+
+  const transitions = useTransition(filteredData, {
+    from: { opacity: 0, transform: 'scale(0.95)' },
+    enter: { opacity: 1, transform: 'scale(1)' },
+    leave: { opacity: 0, transform: 'scale(0.95)' },
+    trail: 100,
+  });
 
   return (
     <div className="bg-gray-100 min-h-screen py-8">
@@ -80,22 +90,26 @@ function Landing() {
           </select>
         </div>
 
-        {filteredData ? (
+        {filteredData.length > 0 ? ( // Check if filteredData has items before rendering
           <div className="grid gap-8 lg:grid-cols-2">
-            {filteredData.map((item) => (
-              <div key={item.id} className="bg-white shadow rounded-lg">
+            {transitions(({ opacity, transform }, item) => (
+              <animated.div
+                style={{ opacity, transform }}
+                key={item?.id}
+                className="bg-white shadow rounded-lg"
+              >
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{item.question}</h3>
-                  <p className="text-gray-700 mb-4">{item.answer}</p>
-                  <p className="text-gray-500">Category: {item.category}</p>
+                  <h3 className="text-xl font-semibold mb-2">{item?.question}</h3>
+                  <p className="text-gray-700 mb-4">{item?.answer}</p>
+                  <p className="text-gray-500">Category: {item?.category}</p>
                 </div>
-              </div>
+              </animated.div>
             ))}
           </div>
         ) : (
-           <div className="flex justify-center items-center h-64">
-    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-emerald-500"></div>
-  </div>
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-emerald-500"></div>
+          </div>
         )}
       </div>
     </div>
