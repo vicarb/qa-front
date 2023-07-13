@@ -66,97 +66,105 @@ const data = [
 ];
 
 function SecLanding() {
-    const [filteredData, setFilteredData] = useState<Item[]>([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  
-    useEffect(() => {
-      const filteredItems = data.filter((item) =>
-        item.question.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-  
-      if (selectedCategory !== 'All') {
-        const categoryFilteredItems = filteredItems.filter(
-          (item) => item.category === selectedCategory
-        );
-        setFilteredData(categoryFilteredItems);
-      } else {
-        setFilteredData(filteredItems);
-      }
-    }, [searchTerm, selectedCategory]);
-  
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchTerm(event.target.value);
-    };
-  
-    const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-      setSelectedCategory(event.target.value);
-    };
-  
-    const categories = Array.from(new Set(data.map((item) => item.category)));
-  
-    const transitions = useTransition(filteredData, {
-      from: { opacity: 0, transform: 'scale(0.95)' },
-      enter: { opacity: 1, transform: 'scale(1)' },
-      leave: { opacity: 0, transform: 'scale(0.95)' },
-      trail: 100,
-    });
-  
-    return (
-      <div className="bg-gray-100 min-h-screen py-8">
-        <div className="container mx-auto">
-          <h1 className="text-3xl font-bold mb-8 text-green-500 has text-center">
-            Interview Questions
-          </h1>
-  
-          <div className="flex mb-4">
-            <input
-              type="text"
-              className="border border-gray-300 rounded-l py-2 px-4 w-full"
-              placeholder="Search by question"
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-            <select
-              className="border border-gray-300 rounded-r py-2 px-4 bg-white"
-              value={selectedCategory}
-              onChange={handleCategoryChange}
-            >
-              <option value="All">All Categories</option>
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
-  
-          {filteredData.length > 0 ? (
-            <div className="grid gap-8 lg:grid-cols-2">
-              {transitions(({ opacity, transform }, item) => (
-                <animated.div
-                  style={{ opacity, transform }}
-                  key={item.id}
-                  className="bg-white shadow rounded-lg"
-                >
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold mb-2">{item.question}</h3>
-                    <p className="text-gray-700 mb-4">{item.answer}</p>
-                    {item.category && (
-                      <p className="text-gray-500">Category: {item.category}</p>
-                    )}
-                  </div>
-                </animated.div>
-              ))}
-            </div>
-          ) : (
-            <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-emerald-500"></div>
-            </div>
-          )}
-        </div>
-      </div>
+  const [filteredData, setFilteredData] = useState<Item[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  useEffect(() => {
+    const filteredItems = data.filter((item) =>
+      item.question.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }
-  
-  export default SecLanding;
+    if (selectedCategory !== 'All') {
+      const categoryFilteredItems = filteredItems.filter(
+        (item) => item.category === selectedCategory
+      );
+      setFilteredData(categoryFilteredItems);
+    } else {
+      setFilteredData(filteredItems);
+    }
+  }, [searchTerm, selectedCategory]);
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(event.target.value);
+  };
+  const categories = Array.from(new Set(data.map((item) => item.category)));
+  const titleTransitions = useTransition(true, {
+    from: { opacity: 0, transform: 'translateY(-20px)' },
+    enter: { opacity: 1, transform: 'translateY(0)' },
+    leave: { opacity: 0, transform: 'translateY(-20px)' },
+  });
+
+  const transitions = useTransition(filteredData, {
+    from: { opacity: 0, transform: 'scale(0.95)' },
+    enter: { opacity: 1, transform: 'scale(1)' },
+    leave: { opacity: 0, transform: 'scale(0.95)' },
+    trail: 100,
+  });
+
+  return (
+    <div className="bg-gray-100 min-h-screen py-8">
+      <div className="container mx-auto">
+      {titleTransitions(({ opacity, transform }) => (
+        <animated.h1
+          style={{ opacity, transform }}
+          className="text-6xl font-bold mb-8 text-green-500 has text-center mt-10"
+        >
+          Interview Questions
+        </animated.h1>
+      ))}
+
+        <div className="flex mb-4">
+          <input
+            type="text"
+            className="border border-gray-300 rounded-l py-2 px-4 w-full"
+            placeholder="Search by question"
+            value={searchTerm}
+            onChange={handleSearch}
+          />
+          <select
+            className="border border-gray-300 rounded-r py-2 px-4 bg-white"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+          >
+            <option value="All">All Categories</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {filteredData.length > 0 ? (
+          <div className="grid gap-8 lg:grid-cols-2">
+            {transitions(({ opacity, transform }, item) => (
+              <animated.div
+                style={{ opacity, transform }}
+                key={item.id}
+                className="bg-white shadow rounded-lg"
+              >
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{item.question}</h3>
+                  <p className="text-gray-700 mb-4">{item.answer}</p>
+                  {item.category && (
+                    <p className="text-gray-500">Category: {item.category}</p>
+                  )}
+                </div>
+              </animated.div>
+            ))}
+          </div>
+        ) : (
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-emerald-500"></div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default SecLanding;
