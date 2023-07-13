@@ -5,7 +5,7 @@ import SecLanding from '@/components/SecLanding/SecLanding'
 export default function Home() {
   return (
     <>
-    // <Landing />
+
     <SecLanding/>
     </>  )
 }
