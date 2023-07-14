@@ -120,7 +120,7 @@ function SecLanding() {
         <div className="flex mb-4">
           <input
             type="text"
-            className="border border-gray-300 rounded-l py-2 px-4 w-full"
+            className="border border-gray-300 rounded-l py-2 px-4 w-full text-xl font-semibold"
             placeholder="Search by question"
             value={searchTerm}
             onChange={handleSearch}
