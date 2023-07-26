@@ -26,7 +26,7 @@ const LandingPage = () => {
         <h1 className="text-4xl font-bold text-center text-white mb-8">Interview Questions</h1>
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {concepts.map((concept) => (
-            <Link href={`/concept/${concept.id}`} key={concept.id}>
+            <Link href={`/concept/${concept._id}`} key={concept._id}>
               <span className="flex items-center justify-center h-32 rounded-lg shadow-lg bg-white text-center transition-colors duration-300 hover:bg-blue-500 hover:text-white">
                 {concept.category}
               </span>
