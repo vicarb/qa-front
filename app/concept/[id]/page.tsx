@@ -1,6 +1,6 @@
 
 import React from "react";
-
+import { ConceptDetail } from "@/components/ConceptDetail/ConceptDetail";
 
 
   const ConceptDetailPage = ({ params }) => {
