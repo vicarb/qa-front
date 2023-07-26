@@ -1,7 +1,18 @@
-import React from 'react'
 
-export default function page() {
+import React from "react";
+
+
+
+  const ConceptDetailPage = ({ params }) => {
+  console.log("params", params);
+  
+  // Your component logic...
   return (
-    <div>hello</div>
-  )
-}
+<>
+
+    <ConceptDetail params={params}/>
+</>
+  );
+};
+
+export default ConceptDetailPage;
