@@ -11,7 +11,12 @@ const LandingPage = () => {
       try {
         const response = await fetch("http://127.0.0.1:8082/api/data");
         const data = await response.json();
-        setConcepts(data);
+
+        // Extract unique interview question categories using a Set
+        const uniqueCategories = new Set(data.map((concept) => concept.category));
+
+        // Convert the Set back to an array and set it as the state
+        setConcepts(Array.from(uniqueCategories));
       } catch (error) {
         console.error("Error fetching concepts:", error);
       }
@@ -25,10 +30,10 @@ const LandingPage = () => {
       <div className="max-w-md mx-auto">
         <h1 className="text-4xl font-bold text-center text-white mb-8">Interview Questions</h1>
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {concepts.map((concept) => (
-            <Link href={`/concept/${concept._id}`} key={concept._id}>
+          {concepts.map((category) => (
+            <Link href={`/concept/${category}`} key={category}>
               <span className="flex items-center justify-center h-32 rounded-lg shadow-lg bg-white text-center transition-colors duration-300 hover:bg-blue-500 hover:text-white">
-                {concept.category}
+                {category}
               </span>
             </Link>
           ))}

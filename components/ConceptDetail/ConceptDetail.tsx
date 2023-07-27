@@ -8,18 +8,26 @@ export const ConceptDetail = ({ params }) => {
   console.log("id", id);
   useEffect(() => {
     if (id) {
-      fetchProduct();
+      fetchConcepts();
     }
   }, [id]);
 
-  const fetchProduct = async () => {
-    const response = await axios.get(`http://127.0.0.1:8082/api/data/${id}`);
+  const fetchConcepts = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8082/api/data");
+      const data = response.data;
 
+      // Filter the data based on the 'id' parameter
+      const filteredConcept = data.find((item) => item.category === id);
 
-    const data = response.data;
-    setConcept(data);
-    console.log("inside use effect",concept);
-
+      if (filteredConcept) {
+        setConcept(filteredConcept);
+      } else {
+        console.error("Concept not found with ID:", id);
+      }
+    } catch (error) {
+      console.error("Error fetching concepts:", error);
+    }
   };
   console.log(concept);
   
