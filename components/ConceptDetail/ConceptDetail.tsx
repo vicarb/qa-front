@@ -31,17 +31,24 @@ export const ConceptDetail = ({ params }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-600 to-blue-400 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md mx-auto">
-        {concepts.map((concept) => (
-          <div key={concept._id} className="bg-white shadow-lg rounded-lg p-6 mb-4">
-            <h1 className="text-3xl font-bold mb-4">{concept.category}</h1>
-            <p className="text-lg text-gray-800 mb-6">{concept.question}</p>
-            <p className="text-base text-gray-600">{concept.answer}</p>
-          </div>
-        ))}
-        {concepts.length === 0 && (
-          <p className="text-lg text-gray-800">No concepts found with Category: {id}</p>
-        )}
+      <div className="max-w-3xl mx-auto">
+        <div className="bg-white shadow-lg rounded-lg p-6 space-y-4">
+          <h1 className="text-3xl font-bold text-center">{id}</h1>
+          {concepts.length > 0 ? (
+            concepts.map((concept) => (
+              <div key={concept._id}>
+                <h2 className="text-xl font-semibold">{concept.question}</h2>
+                <p className="text-gray-800 mb-4 whitespace-pre-wrap">
+                  {concept.answer}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p className="text-lg text-gray-800 text-center">
+              No concepts found with Category: {id}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
