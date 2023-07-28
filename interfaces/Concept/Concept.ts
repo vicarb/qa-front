@@ -3,7 +3,7 @@ export interface Concept {
     category: string; // Assuming category is of type string, change it accordingly if it's different
     question: string;
     answer: string;
-    
+    seniority: "Junior" | "Mid-level" | "Senior";
     // Add other properties if there are any
   }
   
