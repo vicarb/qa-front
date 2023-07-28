@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'export',
+    server: {
+        port: 8080,
+      },
 }
 
 module.exports = nextConfig

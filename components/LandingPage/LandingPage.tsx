@@ -17,6 +17,8 @@ const LandingPage = () => {
 
         // Convert the Set back to an array and set it as the state
         setConcepts(Array.from(uniqueCategories));
+        console.log("this is concepts",concepts);
+        
       } catch (error) {
         console.error("Error fetching concepts:", error);
       }
