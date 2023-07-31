@@ -7,10 +7,11 @@ import { Concept } from "@/interfaces/Concept/Concept";
 
 const AdminComponent = () => {
   const [formData, setFormData] = useState<Concept>({
-    _id: "",
+
     category: "",
     question: "",
     answer: "",
+    seniority: "Midlevel",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +32,7 @@ const AdminComponent = () => {
 
       // Clear form after successful submission
       setFormData({
-        _id: "",
+
         category: "",
         question: "",
         answer: "",
