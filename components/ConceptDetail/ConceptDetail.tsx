@@ -37,7 +37,6 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
     }
   };
   
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-600 to-blue-400 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
@@ -60,6 +59,14 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
               No concepts found with Category: {id}
             </p>
           )}
+        </div>
+        <div className="mt-4">
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded absolute top-0 left-0 mt-4 ml-4"
+            onClick={() => window.history.back()}
+          >
+            Go Back to Home Page
+          </button>
         </div>
       </div>
     </div>
