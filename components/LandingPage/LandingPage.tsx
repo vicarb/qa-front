@@ -2,25 +2,22 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Concept } from "@/interfaces/Concept/Concept";
+
 const LandingPage = () => {
-  const [concepts, setConcepts] = useState<string[]>([]); // Define the type of 'concepts' as string[]
+  const [concepts, setConcepts] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch concepts (interview question categories) from your API endpoint
     const fetchConcepts = async () => {
       try {
         const response = await fetch("https://my-service5-52m34p25ra-uk.a.run.app/api/data");
-        const data: Concept[] = await response.json(); // Define the type of 'data' explicitly as Concept[]
-
-        // Extract unique interview question categories using a Set
+        const data: Concept[] = await response.json();
         const uniqueCategories = new Set(data.map((concept) => concept.category));
-
-        // Convert the Set back to an array and set it as the state
         setConcepts(Array.from(uniqueCategories));
-        console.log("this is concepts",concepts);
-        
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching concepts:", error);
+        setLoading(false);
       }
     };
 
@@ -32,13 +29,19 @@ const LandingPage = () => {
       <div className="max-w-md mx-auto">
         <h1 className="text-4xl font-bold text-center text-white mb-8">Interview Questions</h1>
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {concepts.map((category) => (
-            <Link href={`/concept/${category}`} key={category}>
-              <span className="flex items-center justify-center h-32 rounded-lg shadow-lg bg-white text-center transition-colors duration-300 hover:bg-blue-500 hover:text-white">
-                {category}
-              </span>
-            </Link>
-          ))}
+          {loading ? ( // If loading is true, display the loading message
+            <div className="flex items-center justify-center h-32 rounded-lg shadow-lg bg-white text-center transition-colors duration-300">
+              Loading...
+            </div>
+          ) : (
+            concepts.map((category) => (
+              <Link href={`/concept/${category}`} key={category}>
+                <span className="flex items-center justify-center h-32 rounded-lg shadow-lg bg-white text-center transition-colors duration-300 hover:bg-blue-500 hover:text-white">
+                  {category}
+                </span>
+              </Link>
+            ))
+          )}
         </div>
       </div>
     </div>
@@ -46,4 +49,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-
