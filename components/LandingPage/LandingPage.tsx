@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Concept } from "@/interfaces/Concept/Concept";
+import Spinner from "../Spinner/Spinner";
 
 const LandingPage = () => {
   const [concepts, setConcepts] = useState<string[]>([]);
@@ -28,21 +29,22 @@ const LandingPage = () => {
     <div className="min-h-screen bg-gradient-to-b from-blue-600 to-blue-400 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md mx-auto">
         <h1 className="text-4xl font-bold text-center text-white mb-8">Interview Questions</h1>
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {loading ? ( // If loading is true, display the loading message
-            <div className="flex items-center justify-center h-32 rounded-lg shadow-lg bg-white text-center transition-colors duration-300">
-              Loading...
-            </div>
-          ) : (
-            concepts.map((category) => (
+        {loading ? (
+          // Center the Spinner component using flexbox properties
+          <div className="flex items-center justify-center">
+            <Spinner />
+          </div>
+        ) : (
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {concepts.map((category) => (
               <Link href={`/concept/${category}`} key={category}>
                 <span className="flex items-center justify-center h-32 rounded-lg shadow-lg bg-white text-center transition-colors duration-300 hover:bg-blue-500 hover:text-white">
                   {category}
                 </span>
               </Link>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
