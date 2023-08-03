@@ -2,12 +2,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Concept } from "@/interfaces/Concept/Concept";
-// Assuming the Concept interface is defined as you provided
-
 
 const AdminComponent = () => {
   const [formData, setFormData] = useState<Concept>({
-
+    _id: "",
     category: "",
     question: "",
     answer: "",
@@ -15,6 +13,12 @@ const AdminComponent = () => {
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  // Separate handleChange for textarea
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
@@ -32,10 +36,11 @@ const AdminComponent = () => {
 
       // Clear form after successful submission
       setFormData({
-
+        _id: "",
         category: "",
         question: "",
         answer: "",
+        seniority: "Midlevel", // Set the default value for seniority here as well
       });
     } catch (error) {
       console.error("Error posting data:", error);
@@ -80,7 +85,7 @@ const AdminComponent = () => {
             id="answer"
             name="answer"
             value={formData.answer}
-            onChange={handleChange}
+            onChange={handleTextareaChange} // Use the specific textarea handler here
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200"
           />
         </div>
