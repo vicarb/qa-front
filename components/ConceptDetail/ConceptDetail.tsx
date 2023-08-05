@@ -5,6 +5,7 @@ import axios from "axios";
 import { Params } from "@/interfaces/Params/Params";
 import { Concept } from "@/interfaces/Concept/Concept";
 import Spinner from "../Spinner/Spinner";
+import CommentForm from "../CommentForm/CommentForm";
 
 export const ConceptDetail = ({ params }: { params: Params }) => {
   const { id } = params;
@@ -68,6 +69,7 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
             Go Back to Home Page
           </button>
         </div>
+        <CommentForm conceptId={id} />
       </div>
     </div>
   );
