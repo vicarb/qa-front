@@ -1,6 +1,5 @@
 'use client'
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Params } from "@/interfaces/Params/Params";
 import { Concept } from "@/interfaces/Concept/Concept";
@@ -12,20 +11,29 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
   const [concept, setConcept] = useState(null);
   const [concepts, setConcepts] = useState<Concept[]>([]);
   const [loading, setLoading] = useState(true); // Add a loading state
+  const [likesAndDislikes, setLikesAndDislikes] = useState({});
 
   useEffect(() => {
     fetchConcepts();
+    // Initialize likes and dislikes based on existing data
+    const initialLikesAndDislikes = {};
+    concepts.forEach((concept) => {
+      initialLikesAndDislikes[concept._id] = {
+        likes: 0,
+        dislikes: 0,
+      };
+    });
+    setLikesAndDislikes(initialLikesAndDislikes);
   }, []);
 
   const fetchConcepts = async () => {
     try {
-      // const response = await axios.get("https://my-service5-52m34p25ra-uk.a.run.app/api/data");
-      const response = await axios.get("http://127.0.0.1:8082/api/data");
-      const data: Concept[] = response.data; // Define the type of 'data' explicitly as Concept[]
-  
-      // Filter the data based on the 'category' provided by the 'id' parameter
+      const response = await axios.get("https://my-service5-52m34p25ra-uk.a.run.app/api/data");
+      // const response = await axios.get("http://127.0.0.1:8082/api/data");
+      const data: Concept[] = response.data;
+
       const filteredConcepts = data.filter((item) => item.category === id);
-  
+
       if (filteredConcepts.length > 0) {
         setConcepts(filteredConcepts);
       } else {
@@ -34,17 +42,36 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
     } catch (error) {
       console.error("Error fetching concepts:", error);
     } finally {
-      setLoading(false); // Set loading to false, regardless of success or failure
+      setLoading(false);
     }
   };
-  
+
+  const handleLike = (questionId) => {
+    setLikesAndDislikes((prev) => ({
+      ...prev,
+      [questionId]: {
+        ...prev[questionId],
+        likes: (prev[questionId]?.likes || 0) + 1,
+      },
+    }));
+  };
+
+  const handleDislike = (questionId) => {
+    setLikesAndDislikes((prev) => ({
+      ...prev,
+      [questionId]: {
+        ...prev[questionId],
+        dislikes: (prev[questionId]?.dislikes || 0) + 1,
+      },
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-600 to-blue-400 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="bg-white shadow-lg rounded-lg p-6 space-y-4">
           <h1 className="text-3xl font-bold text-center">{id}</h1>
           {loading ? (
-            // Show the spinner when loading is true
             <Spinner />
           ) : concepts.length > 0 ? (
             concepts.map((concept) => (
@@ -53,6 +80,20 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
                 <p className="text-gray-800 mb-4 whitespace-pre-wrap">
                   {concept.answer}
                 </p>
+                <div className="flex space-x-4">
+                  <button
+                    className="bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-2 rounded"
+                    onClick={() => handleLike(concept._id)}
+                  >
+                    Like ({likesAndDislikes[concept._id]?.likes || 0})
+                  </button>
+                  <button
+                    className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded"
+                    onClick={() => handleDislike(concept._id)}
+                  >
+                    Dislike ({likesAndDislikes[concept._id]?.dislikes || 0})
+                  </button>
+                </div>
               </div>
             ))
           ) : (
