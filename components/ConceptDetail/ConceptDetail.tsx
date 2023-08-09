@@ -49,7 +49,7 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
       ...prev,
       [questionId]: {
         likes: !prev[questionId]?.likes ? 1 : 0,
-        dislikes: prev[questionId]?.dislikes || 0,
+        dislikes: 0,
       },
     }));
   };
@@ -58,7 +58,7 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
     setLikesAndDislikes((prev) => ({
       ...prev,
       [questionId]: {
-        likes: prev[questionId]?.likes || 0,
+        likes: 0,
         dislikes: !prev[questionId]?.dislikes ? 1 : 0,
       },
     }));
