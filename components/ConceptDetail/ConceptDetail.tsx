@@ -13,18 +13,10 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
   const [concept, setConcept] = useState(null);
   const [concepts, setConcepts] = useState<Concept[]>([]);
   const [loading, setLoading] = useState(true);
-  const [likesAndDislikes, setLikesAndDislikes] = useState({});
+  const [likesAndDislikes, setLikesAndDislikes] = useState<{ [key: string]: { likes: number; dislikes: number } }>({}); // Provide a type for likesAndDislikes
 
   useEffect(() => {
     fetchConcepts();
-    const initialLikesAndDislikes = {};
-    concepts.forEach((concept) => {
-      initialLikesAndDislikes[concept._id] = {
-        likes: 0,
-        dislikes: 0,
-      };
-    });
-    setLikesAndDislikes(initialLikesAndDislikes);
   }, []);
 
   const fetchConcepts = async () => {
@@ -36,6 +28,14 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
 
       if (filteredConcepts.length > 0) {
         setConcepts(filteredConcepts);
+        const initialLikesAndDislikes: { [key: string]: { likes: number; dislikes: number } } = {};
+        filteredConcepts.forEach((concept) => {
+          initialLikesAndDislikes[concept._id] = {
+            likes: 0,
+            dislikes: 0,
+          };
+        });
+        setLikesAndDislikes(initialLikesAndDislikes);
       } else {
         console.error("No concepts found with Category:", id);
       }
@@ -46,7 +46,7 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
     }
   };
 
-  const handleLike = (questionId) => {
+  const handleLike = (questionId: string) => {
     setLikesAndDislikes((prev) => ({
       ...prev,
       [questionId]: {
@@ -55,8 +55,9 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
       },
     }));
   };
+  
 
-  const handleDislike = (questionId) => {
+  const handleDislike = (questionId: string) => {
     setLikesAndDislikes((prev) => ({
       ...prev,
       [questionId]: {
@@ -65,6 +66,7 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
       },
     }));
   };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-600 to-blue-400 py-12 px-4 sm:px-6 lg:px-8">
