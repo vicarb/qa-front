@@ -10,12 +10,11 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
   const { id } = params;
   const [concept, setConcept] = useState(null);
   const [concepts, setConcepts] = useState<Concept[]>([]);
-  const [loading, setLoading] = useState(true); // Add a loading state
+  const [loading, setLoading] = useState(true);
   const [likesAndDislikes, setLikesAndDislikes] = useState({});
 
   useEffect(() => {
     fetchConcepts();
-    // Initialize likes and dislikes based on existing data
     const initialLikesAndDislikes = {};
     concepts.forEach((concept) => {
       initialLikesAndDislikes[concept._id] = {
@@ -29,7 +28,6 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
   const fetchConcepts = async () => {
     try {
       const response = await axios.get("https://my-service5-52m34p25ra-uk.a.run.app/api/data");
-      // const response = await axios.get("http://127.0.0.1:8082/api/data");
       const data: Concept[] = response.data;
 
       const filteredConcepts = data.filter((item) => item.category === id);
@@ -50,8 +48,8 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
     setLikesAndDislikes((prev) => ({
       ...prev,
       [questionId]: {
-        ...prev[questionId],
-        likes: (prev[questionId]?.likes || 0) + 1,
+        likes: !prev[questionId]?.likes ? 1 : 0,
+        dislikes: prev[questionId]?.dislikes || 0,
       },
     }));
   };
@@ -60,8 +58,8 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
     setLikesAndDislikes((prev) => ({
       ...prev,
       [questionId]: {
-        ...prev[questionId],
-        dislikes: (prev[questionId]?.dislikes || 0) + 1,
+        likes: prev[questionId]?.likes || 0,
+        dislikes: !prev[questionId]?.dislikes ? 1 : 0,
       },
     }));
   };
@@ -82,13 +80,17 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
                 </p>
                 <div className="flex space-x-4">
                   <button
-                    className="bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-2 rounded"
+                    className={`bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-2 rounded ${
+                      likesAndDislikes[concept._id]?.likes ? "bg-green-600" : ""
+                    }`}
                     onClick={() => handleLike(concept._id)}
                   >
                     Like ({likesAndDislikes[concept._id]?.likes || 0})
                   </button>
                   <button
-                    className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded"
+                    className={`bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded ${
+                      likesAndDislikes[concept._id]?.dislikes ? "bg-red-600" : ""
+                    }`}
                     onClick={() => handleDislike(concept._id)}
                   >
                     Dislike ({likesAndDislikes[concept._id]?.dislikes || 0})
