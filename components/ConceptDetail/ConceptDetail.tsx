@@ -5,6 +5,8 @@ import { Params } from "@/interfaces/Params/Params";
 import { Concept } from "@/interfaces/Concept/Concept";
 import Spinner from "../Spinner/Spinner";
 import CommentForm from "../CommentForm/CommentForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
 export const ConceptDetail = ({ params }: { params: Params }) => {
   const { id } = params;
@@ -85,6 +87,10 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
                     }`}
                     onClick={() => handleLike(concept._id)}
                   >
+                    <FontAwesomeIcon
+                      icon={faThumbsUp}
+                      className="mr-1"
+                    />
                     Like ({likesAndDislikes[concept._id]?.likes || 0})
                   </button>
                   <button
@@ -93,6 +99,10 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
                     }`}
                     onClick={() => handleDislike(concept._id)}
                   >
+                    <FontAwesomeIcon
+                      icon={faThumbsDown}
+                      className="mr-1"
+                    />
                     Dislike ({likesAndDislikes[concept._id]?.dislikes || 0})
                   </button>
                 </div>
