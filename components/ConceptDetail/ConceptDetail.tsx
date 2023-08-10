@@ -8,65 +8,88 @@ import CommentForm from "../CommentForm/CommentForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
-export const ConceptDetail = ({ params }: { params: Params }) => {
+interface LikeAndDislike {
+  [key: string]: {
+    likes: number;
+    dislikes: number;
+  };
+}
+
+const ConceptItem: React.FC<{ concept: Concept; handleLike: (id: string) => void; handleDislike: (id: string) => void; likesAndDislikes: LikeAndDislike }> = ({ concept, handleLike, handleDislike, likesAndDislikes }) => (
+  <div key={concept._id}>
+    <h2 className="text-xl font-semibold">{concept.question}</h2>
+    <p className="text-gray-800 mb-4 whitespace-pre-wrap">{concept.answer}</p>
+    <div className="flex space-x-4">
+      <button
+        className={`bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-2 rounded ${likesAndDislikes[concept._id]?.likes ? "bg-green-600" : ""}`}
+        onClick={() => handleLike(concept._id)}
+      >
+        <FontAwesomeIcon icon={faThumbsUp} className="mr-1" />
+        Like ({likesAndDislikes[concept._id]?.likes || 0})
+      </button>
+      <button
+        className={`bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded ${likesAndDislikes[concept._id]?.dislikes ? "bg-red-600" : ""}`}
+        onClick={() => handleDislike(concept._id)}
+      >
+        <FontAwesomeIcon icon={faThumbsDown} className="mr-1" />
+        Dislike ({likesAndDislikes[concept._id]?.dislikes || 0})
+      </button>
+    </div>
+  </div>
+);
+
+export const ConceptDetail: React.FC<{ params: Params }> = ({ params }) => {
   const { id } = params;
-  const [concept, setConcept] = useState(null);
   const [concepts, setConcepts] = useState<Concept[]>([]);
   const [loading, setLoading] = useState(true);
-  const [likesAndDislikes, setLikesAndDislikes] = useState<{ [key: string]: { likes: number; dislikes: number } }>({}); // Provide a type for likesAndDislikes
+  const [likesAndDislikes, setLikesAndDislikes] = useState<LikeAndDislike>({});
 
   useEffect(() => {
-    fetchConcepts();
-  }, []);
+    const fetchConcepts = async () => {
+      try {
+        const response = await axios.get("https://my-service5-52m34p25ra-uk.a.run.app/api/data");
+        const data: Concept[] = response.data;
+        const filteredConcepts = data.filter((item) => item.category === id);
 
-  const fetchConcepts = async () => {
-    try {
-      const response = await axios.get("https://my-service5-52m34p25ra-uk.a.run.app/api/data");
-      const data: Concept[] = response.data;
-
-      const filteredConcepts = data.filter((item) => item.category === id);
-
-      if (filteredConcepts.length > 0) {
-        setConcepts(filteredConcepts);
-        const initialLikesAndDislikes: { [key: string]: { likes: number; dislikes: number } } = {};
-        filteredConcepts.forEach((concept) => {
-          initialLikesAndDislikes[concept._id] = {
-            likes: 0,
-            dislikes: 0,
-          };
-        });
-        setLikesAndDislikes(initialLikesAndDislikes);
-      } else {
-        console.error("No concepts found with Category:", id);
+        if (filteredConcepts.length > 0) {
+          setConcepts(filteredConcepts);
+          const initialLikesAndDislikes: LikeAndDislike = {};
+          filteredConcepts.forEach((concept) => {
+            initialLikesAndDislikes[concept._id] = { likes: 0, dislikes: 0 };
+          });
+          setLikesAndDislikes(initialLikesAndDislikes);
+        } else {
+          console.error("No concepts found with Category:", id);
+        }
+      } catch (error) {
+        console.error("Error fetching concepts:", error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching concepts:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+
+    fetchConcepts();
+  }, [id]);
 
   const handleLike = (questionId: string) => {
     setLikesAndDislikes((prev) => ({
       ...prev,
       [questionId]: {
-        likes: !prev[questionId]?.likes ? 1 : 0,
-        dislikes: 0,
+        likes: prev[questionId]?.likes + 1 || 1,
+        dislikes: prev[questionId]?.dislikes || 0,
       },
     }));
   };
-  
 
   const handleDislike = (questionId: string) => {
     setLikesAndDislikes((prev) => ({
       ...prev,
       [questionId]: {
-        likes: 0,
-        dislikes: !prev[questionId]?.dislikes ? 1 : 0,
+        likes: prev[questionId]?.likes || 0,
+        dislikes: prev[questionId]?.dislikes + 1 || 1,
       },
     }));
   };
-  
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-600 to-blue-400 py-12 px-4 sm:px-6 lg:px-8">
@@ -77,43 +100,10 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
             <Spinner />
           ) : concepts.length > 0 ? (
             concepts.map((concept) => (
-              <div key={concept._id}>
-                <h2 className="text-xl font-semibold">{concept.question}</h2>
-                <p className="text-gray-800 mb-4 whitespace-pre-wrap">
-                  {concept.answer}
-                </p>
-                <div className="flex space-x-4">
-                  <button
-                    className={`bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-2 rounded ${
-                      likesAndDislikes[concept._id]?.likes ? "bg-green-600" : ""
-                    }`}
-                    onClick={() => handleLike(concept._id)}
-                  >
-                    <FontAwesomeIcon
-                      icon={faThumbsUp}
-                      className="mr-1"
-                    />
-                    Like ({likesAndDislikes[concept._id]?.likes || 0})
-                  </button>
-                  <button
-                    className={`bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded ${
-                      likesAndDislikes[concept._id]?.dislikes ? "bg-red-600" : ""
-                    }`}
-                    onClick={() => handleDislike(concept._id)}
-                  >
-                    <FontAwesomeIcon
-                      icon={faThumbsDown}
-                      className="mr-1"
-                    />
-                    Dislike ({likesAndDislikes[concept._id]?.dislikes || 0})
-                  </button>
-                </div>
-              </div>
+              <ConceptItem concept={concept} handleLike={handleLike} handleDislike={handleDislike} likesAndDislikes={likesAndDislikes} />
             ))
           ) : (
-            <p className="text-lg text-gray-800 text-center">
-              No concepts found with Category: {id}
-            </p>
+            <p className="text-lg text-gray-800 text-center">No concepts found with Category: {id}</p>
           )}
         </div>
         <div className="mt-4">
