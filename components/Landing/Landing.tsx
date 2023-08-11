@@ -64,7 +64,7 @@ function Landing() {
   });
 
   return (
-    <div className="bg-gray-100 min-h-screen py-8">
+    <div className="h-[calc(100vh-4rem)] bg-gradient-to-b from-blue-600 to-blue-400 py-12 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto">
         <h1 className="text-3xl font-bold mb-8 text-green-500 has text-center">Interview Questions</h1>
 

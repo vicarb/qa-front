@@ -26,7 +26,7 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-600 to-blue-400 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="h-[calc(100vh-4rem)] bg-gradient-to-b from-blue-600 to-blue-400 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md mx-auto">
         <h1 className="text-4xl font-bold text-center text-white mb-8">Interview Questions</h1>
         {loading ? (
