@@ -38,7 +38,7 @@ const LandingPage = () => {
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {concepts.map((category) => (
               <Link href={`/concept/${category}`} key={category}>
-                <span className="flex items-center justify-center text-slate-600 h-32 rounded-lg shadow-lg bg-white text-center transition-colors duration-300 font-semibold hover:bg-blue-500 hover:text-white">
+                <span className="flex items-center justify-center text-slate-600 h-32 rounded-lg shadow-lg bg-white text-center transition-colors duration-300 font-semibold hover:bg-blue-500 hover:text-white text-lg">
                   {category}
                 </span>
               </Link>
