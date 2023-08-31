@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-blue-600 mt-0 py-8 text-center text-white">
       <div className="container mx-auto">
-        <p className="mb-4">&copy; {new Date().getFullYear()} Share your interview questions with us!</p>
+        <p className="mb-4 text-xl font-semibold">&copy; {new Date().getFullYear()} Share your interview questions with us!</p>
         <div className="flex justify-center">
           {/* Styled Navigation buttons */}
           <Link href="/">
