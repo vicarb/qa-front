@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
         <div className="flex justify-center">
           {/* Styled Navigation buttons */}
           <Link href="/">
-            <span className="mx-2 py-2 px-4 bg-white text-blue-600 rounded-full hover:bg-blue-500 hover:text-white">
+            <span className="mx-2 py-4 px-4 bg-white text-blue-600 rounded-full hover:bg-blue-500 hover:text-white">
               Home
             </span>
           </Link>
