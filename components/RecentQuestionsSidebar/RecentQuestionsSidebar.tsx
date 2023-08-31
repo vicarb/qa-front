@@ -44,7 +44,7 @@ const RecentQuestionsSidebar: React.FC = () => {
     </svg>
   </button>
   
-      <div className={`fixed right-0 top-0 h-full bg-gray-100 w-64 p-4 shadow-lg overflow-y-auto transform transition-transform duration-300 ${showSidebar || 'translate-x-64'} lg:translate-x-0`}>
+      <div className={`fixed right-0 top-0 h-full bg-blue-200 w-64 p-4 shadow-lg overflow-y-auto transform transition-transform duration-300 ${showSidebar || 'translate-x-64'} lg:translate-x-0`}>
         <h3 className="text-lg font-semibold mb-4 border-b pb-2">Recently Added Questions</h3>
         <ul className="space-y-2">
           {recentQuestions.length === 0 ? (
