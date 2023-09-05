@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Params } from "@/interfaces/Params/Params";
 import { Concept } from "@/interfaces/Concept/Concept";
@@ -8,43 +8,22 @@ import CommentForm from "../CommentForm/CommentForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp, faThumbsDown } from "@fortawesome/free-solid-svg-icons";
 
-export const ConceptDetail = ({ params }: { params: Params }) => {
+export const ConceptDetail = ({ concepts, params }: { concepts: Concept[], params: Params }) => {
   const { id } = params;
   const [concept, setConcept] = useState(null);
-  const [concepts, setConcepts] = useState<Concept[]>([]);
+  
   const [loading, setLoading] = useState(true);
-  const [likesAndDislikes, setLikesAndDislikes] = useState<{ [key: string]: { likes: number; dislikes: number } }>({}); // Provide a type for likesAndDislikes
+  const initialLikesAndDislikes = {};
+  if (concepts.length > 0) {
+    concepts.forEach((concept) => {
+      initialLikesAndDislikes[concept._id] = {
+        likes: 0,
+        dislikes: 0,
+      };
+    });
+  }
 
-  useEffect(() => {
-    fetchConcepts();
-  }, []);
-
-  const fetchConcepts = async () => {
-    try {
-      const response = await axios.get("https://my-service5-52m34p25ra-uk.a.run.app/api/data");
-      const data: Concept[] = response.data;
-
-      const filteredConcepts = data.filter((item) => item.category === id);
-
-      if (filteredConcepts.length > 0) {
-        setConcepts(filteredConcepts);
-        const initialLikesAndDislikes: { [key: string]: { likes: number; dislikes: number } } = {};
-        filteredConcepts.forEach((concept) => {
-          initialLikesAndDislikes[concept._id] = {
-            likes: 0,
-            dislikes: 0,
-          };
-        });
-        setLikesAndDislikes(initialLikesAndDislikes);
-      } else {
-        console.error("No concepts found with Category:", id);
-      }
-    } catch (error) {
-      console.error("Error fetching concepts:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [likesAndDislikes, setLikesAndDislikes] = useState(initialLikesAndDislikes);
 
   const handleLike = (questionId: string) => {
     setLikesAndDislikes((prev) => ({
@@ -55,7 +34,6 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
       },
     }));
   };
-  
 
   const handleDislike = (questionId: string) => {
     setLikesAndDislikes((prev) => ({
@@ -66,16 +44,12 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
       },
     }));
   };
-  
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-600 to-blue-400 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="bg-white shadow-lg rounded-lg p-6 space-y-4">
           <h1 className="text-3xl font-bold text-center">{id}</h1>
-          {loading ? (
-            <Spinner />
-          ) : concepts.length > 0 ? (
+          {concepts.length > 0 ? (
             concepts.map((concept) => (
               <div key={concept._id}>
                 <h2 className="text-xl font-semibold">{concept.question}</h2>
