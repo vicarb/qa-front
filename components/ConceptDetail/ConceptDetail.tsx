@@ -118,7 +118,7 @@ export const ConceptDetail = ({ params }: { params: Params }) => {
         </div>
         <div className="mt-4">
           <button
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded absolute top-0 left-0 mt-4 ml-4"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded absolute top-0 left-0 mt-20 ml-4"
             onClick={() => window.history.back()}
           >
             Go Back to Home Page
