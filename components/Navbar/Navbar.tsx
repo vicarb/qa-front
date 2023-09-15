@@ -31,11 +31,12 @@ const Navbar: React.FC = () => {
         <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">
           Home
         </a>
-        <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">
-          About
-        </a>
+        
         <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white">
           Contact
+        </a>
+        <a href="#responsive-header" className="block ml-4 mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white">
+          Agregar Pregunta
         </a>
       </div>
     </div>
