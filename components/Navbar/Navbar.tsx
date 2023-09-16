@@ -1,7 +1,7 @@
 'use client'
 // Navbar.tsx
 import React, { useState } from "react";
-
+import Link from "next/link";
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,16 +28,21 @@ const Navbar: React.FC = () => {
       } lg:max-h-full lg:opacity-100`}
     >
       <div className="text-sm lg:flex-grow">
-        <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">
+      <Link href="/">
+        <span  className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white mr-4">
           Home
-        </a>
-        
-        <a href="#responsive-header" className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white">
+        </span>
+        </Link>
+        <Link href="/contact">
+        <span  className="block mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white">
           Contact
-        </a>
-        <a href="#responsive-header" className="block ml-4 mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white">
+        </span>
+        </Link>
+        <Link href="/añadir_pregunta">
+        <span  className="block ml-4 mt-4 lg:inline-block lg:mt-0 text-blue-200 hover:text-white">
           Agregar Pregunta
-        </a>
+        </span>
+        </Link>
       </div>
     </div>
   </div>
