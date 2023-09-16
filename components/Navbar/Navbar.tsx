@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
     <nav className="bg-blue-500 p-4">
   <div className="flex items-center justify-between flex-wrap">
     <div className="flex items-center flex-shrink-0 text-white mr-6">
-      <span className="font-semibold text-xl tracking-tight">Your App</span>
+      <span className="font-semibold text-xl tracking-tight">Tech Prep</span>
     </div>
     <div className="block lg:hidden">
       <button
