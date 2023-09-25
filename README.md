@@ -32,6 +32,7 @@ This Next.js-based guide is a comprehensive resource aimed at helping software d
 - Markdown for content
 - TypeScript
 - CSS Modules
+- TailwindCSS
 
 ## Getting Started
 
