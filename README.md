@@ -1,4 +1,4 @@
-# Next.js Tech Interview Preparation Guide
+# Tech Interview Study Prep
 
 ## Table of Contents
 
