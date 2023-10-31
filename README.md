@@ -15,7 +15,7 @@
 
 ## Introduction
 
-This guide is a comprehensive resource aimed at helping software developers prepare for technical interviews. Instead of coding challenges, it provides an in-depth look at typical questions, concepts, best practices, and strategies for acing your next tech interview.
+This guide is a comprehensive resource aimed at helping software developers prepare for technical interviews. This project is focused on an in-depth typical interviews questions, concepts, best practices, and strategies for acing your next tech interview.
 
 ## Content Covered
 
