@@ -23,6 +23,11 @@ const Footer: React.FC = () => {
               Contact
             </span>
           </Link>
+          <Link href="/contact">
+                      <span className="mx-2 py-2 px-4 bg-white text-blue-600 rounded-full hover:bg-blue-500 hover:text-white">
+                        Contact
+                      </span>
+                    </Link>
          
         </div>
       </div>
