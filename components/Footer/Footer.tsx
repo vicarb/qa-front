@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
       <div className="container mx-auto">
         <p className="mb-4 text-xl font-semibold">&copy; {new Date().getFullYear()} Share your interview questions with us!</p>
         <div className="flex justify-center">
-          {/* Styled Navigation buttons */}
+       
           <Link href="/">
             <span className="mx-2 py-4 px-4 bg-white text-blue-600 rounded-full hover:bg-blue-500 hover:text-white">
               Home
@@ -23,11 +23,7 @@ const Footer: React.FC = () => {
               Contact
             </span>
           </Link>
-          <Link href="/faq">
-            <span className="mx-2 py-2 px-4 bg-white text-blue-600 rounded-full hover:bg-blue-500 hover:text-white">
-              FAQ
-            </span>
-          </Link>
+         
         </div>
       </div>
     </footer>

@@ -1,17 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tech Interview Study Prep
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Content Covered](#content-covered)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+
+## Introduction
+
+This guide is a comprehensive resource aimed at helping software developers prepare for technical interviews. This project is focused on an in-depth typical interviews questions, concepts, best practices, and strategies for acing your next tech interview.
+
+## Content Covered
+
+- Data Structures
+- Algorithms
+- System Design Concepts
+- Behavioral Questions
+- Industry Insights
+- Mock Interviews
+
+## Technologies Used
+
+- Next.js
+- Markdown for content
+- TypeScript
+- CSS Modules
+- TailwindCSS
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- Node.js
+- npm or yarn
+- Git
 
+### Installation
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.

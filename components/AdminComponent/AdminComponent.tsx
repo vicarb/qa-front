@@ -49,7 +49,7 @@ const AdminComponent = () => {
 
   return (
     <div className="max-w-md mx-auto">
-      <h2 className="text-2xl font-semibold mb-4">Add New Concept</h2>
+      <h2 className="text-2xl font-semibold mb-4">Add New Question or Concept</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="category" className="block font-medium">
