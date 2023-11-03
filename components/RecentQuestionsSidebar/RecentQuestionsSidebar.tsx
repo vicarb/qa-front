@@ -51,7 +51,7 @@ const RecentQuestionsSidebar: React.FC = () => {
             <p className="text-gray-500">Loading...</p>
           ) : (
             recentQuestions.map((question, index) => (
-              <li key={index} className="bg-white p-2 rounded shadow hover:bg-gray-200 transition duration-200">
+              <li key={index} className="bg-white p-4 rounded shadow hover:bg-gray-200 transition duration-200 hover:cursor-pointer md:text-md">
                 {question}
               </li>
             ))
