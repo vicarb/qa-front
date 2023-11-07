@@ -48,7 +48,7 @@ const RecentQuestionsSidebar: React.FC = () => {
         <h3 className="text-xl text-slate-600 font-semibold mb-4 border-b pb-2">Recently Added Questions</h3>
         <ul className="space-y-2">
           {recentQuestions.length === 0 ? (
-            <p className="text-gray-500">Loading...</p>
+            <p className="text-gray-600 texl-md">Loading...</p>
           ) : (
             recentQuestions.map((question, index) => (
               <li key={index} className="bg-white p-4 rounded shadow hover:bg-gray-200 transition duration-200 hover:cursor-pointer md:text-md">
