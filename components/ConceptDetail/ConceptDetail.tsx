@@ -58,7 +58,7 @@ export const ConceptDetail = ({ concepts, params }: { concepts: Concept[], param
                 </p>
                 <div className="flex space-x-4">
                   <button
-                    className={`bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-2 rounded ${
+                    className={`bg-green-400 hover:bg-green-500 text-white font-semibold py-1 px-2 rounded ${
                       likesAndDislikes[concept._id]?.likes ? "bg-green-600" : ""
                     }`}
                     onClick={() => handleLike(concept._id)}
